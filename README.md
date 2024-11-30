@@ -1,1 +1,1 @@
-# PA_lab_1
+# Parallel QuickSort implementation
