@@ -9,7 +9,7 @@
 
 const size_t MAX_N = 1e8;
 std::mt19937_64 rnd(std::random_device{}());
-std::array<unsigned long long, MAX_N> arr, test_arr;
+std::array<unsigned long long, MAX_N> arr, test_arr, ans;
 
 typedef std::chrono::high_resolution_clock chrono_time;
 using float_sec = std::chrono::duration<double>;
@@ -23,6 +23,8 @@ void gen_test(unsigned long long mod, size_t len) {
     for (size_t i = 0; i < len; ++i) {
         arr[i] = rnd() % mod;
     }
+    ans = arr;
+    std::sort(ans.begin(), ans.end());
 }
 
 void copy_test(size_t len) {
@@ -39,9 +41,7 @@ double single_test(size_t len) {
     qsort<SortType>(test_arr.begin(), test_arr.begin() + len);
     double res = (get_cur_time() - startTime).count();
 
-    for (size_t i = 0; i < len - 1; ++i) {
-        assert(test_arr[i] <= test_arr[i + 1]);
-    }
+    assert(test_arr == ans);
 
     return res;
 }
